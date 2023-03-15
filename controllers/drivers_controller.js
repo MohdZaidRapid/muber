@@ -22,4 +22,11 @@ module.exports = {
         .catch(next)
     );
   },
+
+  delete(req, res, next) {
+    const driveId = req.params.id;
+    Driver.findByIdAndRemove({ _id: driveId }).then((driver) =>
+      res.status(204).send(driver)
+    );
+  },
 };
