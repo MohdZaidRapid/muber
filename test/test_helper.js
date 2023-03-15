@@ -9,10 +9,11 @@ before((done) => {
     });
 });
 
-beforeEach((done) => {
+beforeEach(async () => {
   const { drivers } = mongoose.connection.collections;
-  drivers
-    .drop()
-    .then(() => done())
-    .catch(() => done());
+
+  try {
+    await drivers.drop();
+    await drivers.createIndex({ "geometry.coordinates": "2dsphere" });
+  } catch {}
 });
